@@ -1,0 +1,15 @@
+:root { --brand:#615EFC; --light:#EEEEEE; --muted:#D1D8C5; --accent:#7E8EF1; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: system-ui, Arial, sans-serif; background:#f8f9fb; color:#111; }
+.nav { display:flex; gap:12px; padding:12px 16px; background:#fff; border-bottom:1px solid #eee; }
+.btn { padding:10px 14px; border:1px solid #ddd; border-radius:10px; cursor:pointer; background:#fff; }
+.btn.primary { background:var(--brand); color:#fff; border-color: var(--brand); }
+.card { background:#fff; border:1px solid #eee; border-radius:14px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,.04); }
+.input, .select, .textarea { width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; margin:6px 0 12px; background:#fff; }
+.table { width:100%; border-collapse: collapse; }
+.table th, .table td { border-bottom:1px solid #eee; padding:10px; text-align:left; }
+.container { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
+.badge { padding:4px 8px; border-radius:12px; background:#eee; font-size:12px; }
+.status-pending { background:#ffe9b3; }
+.status-in-progress { background:#d9ebff; }
+.status-resolved { background:#c9f7d5; }

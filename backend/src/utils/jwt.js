@@ -1,0 +1,12 @@
+import jwt from "jsonwebtoken";
+
+export function signToken(payload, options = {}) {
+  return jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES || "1d",
+    ...options
+  });
+}
+
+export function verifyToken(token) {
+  return jwt.verify(token, process.env.JWT_SECRET);
+}
