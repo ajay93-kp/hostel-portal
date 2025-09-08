@@ -72,6 +72,24 @@ router.get("/", requireAuth, requireRoles("admin"), async (_req, res) => {
   res.json({ faults: rows });
 });
 
+// Employee: list faults assigned to logged-in employee
+router.get("/assigned-to-me", requireAuth, requireRoles("employee"), async (req, res) => {
+  try {
+    const [rows] = await pool.execute(
+      `SELECT f.*
+       FROM faults f
+       JOIN assignments a ON a.fault_id = f.id
+       WHERE a.employee_id = ?
+       ORDER BY f.created_at DESC`,
+      [req.user.id]
+    );
+    res.json({ faults: rows });
+  } catch (error) {
+    console.error("Error fetching assigned faults:", error);
+    res.status(500).json({ message: "Failed to load assigned faults" });
+  }
+});
+
 // Employee: update status for an assigned fault
 router.patch("/:id/status", requireAuth, requireRoles("employee"), async (req, res) => {
   const faultId = req.params.id;

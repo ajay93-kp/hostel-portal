@@ -1,4 +1,3 @@
-//perplexity
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import OAuthCallback from "./pages/OAuthCallback.jsx";
@@ -12,10 +11,13 @@ export default function App() {
   const { user, logout } = useAuth();
   const nav = useNavigate();
 
+  // Determine the home link dynamically
+  const homeLink = user ? `/${user.role}` : "/";
+
   return (
     <>
       <nav className="nav">
-        <Link to="/">Home</Link>
+        <Link to={homeLink}>Home</Link>
         {user?.role === "student" && <Link to="/student">Student</Link>}
         {user?.role === "employee" && <Link to="/employee">Employee</Link>}
         {user?.role === "admin" && <Link to="/admin">Admin</Link>}
@@ -89,4 +91,3 @@ export default function App() {
     </>
   );
 }
-
