@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "./AuthContext.jsx";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
-  const login = (userData, tokenData) => {
+  // Accept an object to avoid argument order confusion
+  const login = ({ userData, tokenData }) => {
     setUser(userData);
-    setToken(tokenData);
+    setToken(tokenData || null);
   };
 
   const logout = () => {
