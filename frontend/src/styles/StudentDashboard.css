@@ -1,0 +1,25 @@
+.student-dashboard {
+  display: flex;
+  height: 100vh;       /* Fixed to viewport */
+  width: 100%;
+  overflow: hidden;    /* Prevent outer browser scroll */
+  background: var(--background);
+}
+
+/* Sidebar styling remains as is */
+
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;      /* Prevent entire content from scrolling—only inner area does */
+  background: var(--surface);
+  padding: 32px;
+}
+
+.page-scroll-area {
+  flex: 1;
+  overflow-y: auto;      /* Only faults/table scrolls */
+  padding-bottom: 24px;
+}

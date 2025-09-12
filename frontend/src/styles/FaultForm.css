@@ -1,0 +1,20 @@
+/* FaultForm.css */
+/* Responsive overrides for FaultForm */
+
+/* Ensure inputs, textarea, and button scale nicely on small screens */
+@media (max-width: 480px) {
+  .card {
+    padding: 16px; /* Adjust padding on small screens */
+  }
+
+  .card .input,
+  .card .textarea,
+  .card .btn.primary {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+    margin-bottom: 12px; /* Maintain adequate spacing */
+    width: 100%; /* Ensure full width on small devices */
+    max-width: 100%;
+    box-sizing: border-box; /* Include padding and border in width */
+  }
+}

@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react";
-import api from "../api/client";
-import FaultForm from "../components/FaultForm";
-import FaultList from "../components/FaultList";
+import { useState } from "react";
+import Sidebar from "../components/Sidebar";
+import ReportFault from "./ReportFault";
+import FaultsPage from "./FaultsPage";
+import "../styles/StudentDashboard.css";
 
 export default function StudentDashboard() {
-  const [faults, setFaults] = useState([]);
-  const load = async () => {
-    const { data } = await api.get("/faults/mine");
-    setFaults(data.faults || []);
+  const [activePage, setActivePage] = useState("reportFault"); // default page
+
+  const handlePageChange = (page) => {
+    setActivePage(page);
   };
-  useEffect(() => { load(); }, []);
+
   return (
-    <>
-      <FaultForm onCreated={() => load()} />
-      <FaultList faults={faults} />
-    </>
+    <div className="student-dashboard">
+      <Sidebar activePage={activePage} onPageChange={handlePageChange} />
+      <main className="dashboard-content">
+        {activePage === "reportFault" && <ReportFault />}
+        {activePage === "faults" && <FaultsPage />}
+      </main>
+    </div>
   );
 }
-

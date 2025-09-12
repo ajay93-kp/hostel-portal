@@ -1,5 +1,6 @@
 import api from "../api/client";
 import { useState } from "react";
+import "../styles/FaultForm.css";
 
 export default function FaultForm({ onCreated }) {
   const [loading, setLoading] = useState(false);

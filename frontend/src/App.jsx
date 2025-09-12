@@ -1,4 +1,5 @@
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, Link, useNavigate, useLocation } from "react-router-dom";
+import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import OAuthCallback from "./pages/OAuthCallback.jsx";
 import StudentDashboard from "./pages/StudentDashboard.jsx";
@@ -10,58 +11,57 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 export default function App() {
   const { user, logout } = useAuth();
   const nav = useNavigate();
+  const location = useLocation();
 
-  // Determine the home link dynamically
-  const homeLink = user ? `/${user.role}` : "/";
+  // Determine whether to show Home and Student links
+  // We want to remove only "Home" and "Student" links from the navbar,
+  // but keep navbar, user info, and logout button visible.
+  const showHomeLink = false; // remove Home link as requested
+  const showStudentLink = false; // remove Student link as requested
 
   return (
     <>
-      <nav className="nav">
-        <Link to={homeLink}>Home</Link>
-        {user?.role === "student" && <Link to="/student">Student</Link>}
-        {user?.role === "employee" && <Link to="/employee">Employee</Link>}
-        {user?.role === "admin" && <Link to="/admin">Admin</Link>}
-        <div style={{ marginLeft: "auto" }}>
-          {user ? (
-            <>
-              <span style={{ marginRight: 12 }}>
-                {user.name} — <b>{user.role}</b>
-              </span>
-              <button
-                className="btn"
-                onClick={() => {
-                  logout();
-                  nav("/login");
-                }}
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <Link className="btn" to="/login">
-              Login
-            </Link>
-          )}
-        </div>
-      </nav>
+      {/* Show nav on all routes except root '/' */}
+      {location.pathname !== "/" && (
+        <nav className="nav">
+          {/* Conditionally render Home link */}
+          {showHomeLink && <Link to={user ? `/${user.role}` : "/"}>Home</Link>}
 
-      <div className="container">
+          {/* Conditionally render role links except Student */}
+          {user?.role === "employee" && <Link to="/employee">Employee</Link>}
+          {user?.role === "admin" && <Link to="/admin">Admin</Link>}
+          {/* Student link deliberately removed */}
+
+          <div style={{ marginLeft: "auto" }}>
+            {user ? (
+              <>
+                <span style={{ marginRight: 12 }}>
+                  {user.name} — <b>{user.role}</b>
+                </span>
+                <button
+                  className="btn"
+                  onClick={() => {
+                    logout();
+                    nav("/");
+                  }}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link className="btn" to="/">
+                Login
+              </Link>
+            )}
+          </div>
+        </nav>
+      )}
+
+      <div className={["/student", "/employee", "/admin"].includes(location.pathname) ? "container-full" : "container"}>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <div className="card">
-                <h2>Hostel Management Portal</h2>
-                <p>
-                  Report faults, assign to employees, and track status. Secure
-                  login with Google or Local mode.
-                </p>
-              </div>
-            }
-          />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/oauth/callback" element={<OAuthCallback />} />
-
           <Route
             path="/student"
             element={
